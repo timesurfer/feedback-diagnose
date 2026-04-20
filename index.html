@@ -48,6 +48,182 @@
             margin-top: 5px;
         }
 
+        .phase-label {
+            display: inline-block;
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 4px 10px;
+            border-radius: 4px;
+            margin-bottom: 8px;
+        }
+
+        .phase-label.what { background: #d1fae5; color: #065f46; }
+        .phase-label.sowhat { background: #ede9fe; color: #5b21b6; }
+        .phase-label.whatif { background: #dbeafe; color: #1e40af; }
+        .phase-label.nowwhat { background: #fed7aa; color: #9a3412; }
+
+        .phase-question {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-bottom: 15px;
+        }
+
+        .nowwhat-panel {
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 16px;
+            padding: 25px;
+            margin-top: 20px;
+        }
+
+        .afspraak-intro {
+            background: #ffffff;
+            border-left: 3px solid #d97706;
+            padding: 10px 14px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        .afspraak-intro strong {
+            color: #9a3412;
+        }
+
+        .afspraak-intro a {
+            color: #d97706;
+            text-decoration: none;
+            font-size: 0.75rem;
+        }
+
+        .afspraak-intro a:hover {
+            text-decoration: underline;
+        }
+
+        .afspraak-block {
+            background: #ffffff;
+            border: 1px solid #e5e5e5;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 10px;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        .afspraak-block.active {
+            opacity: 1;
+            border-color: #d97706;
+            background: #fffbeb;
+        }
+
+        .afspraak-block h4 {
+            font-size: 0.95rem;
+            color: #9a3412;
+            margin-bottom: 5px;
+        }
+
+        .afspraak-block .afspraak-lijn {
+            font-size: 0.75rem;
+            color: #888;
+            margin-bottom: 8px;
+        }
+
+        .afspraak-block p {
+            font-size: 0.85rem;
+            color: #555;
+            margin: 0 0 10px 0;
+        }
+
+        .afspraak-voorbeelden {
+            background: #fef3e2;
+            border-radius: 6px;
+            padding: 10px 12px;
+            font-size: 0.82rem;
+            color: #555;
+            line-height: 1.5;
+        }
+
+        .afspraak-voorbeelden strong {
+            color: #9a3412;
+            font-weight: 600;
+        }
+
+        .afspraak-voorbeelden em {
+            color: #333;
+            font-style: italic;
+        }
+
+        .afspraak-divider {
+            text-align: center;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: #9a3412;
+            font-weight: 600;
+            margin: 15px 0 10px 0;
+            padding-top: 15px;
+            border-top: 1px dashed #fed7aa;
+        }
+
+        .afspraak-bron {
+            margin-top: 8px;
+            font-size: 0.72rem;
+            color: #888;
+        }
+
+        .afspraak-bron a {
+            color: #d97706;
+            text-decoration: none;
+        }
+
+        .afspraak-bron a:hover {
+            text-decoration: underline;
+        }
+
+        .afspraak-input {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #fed7aa;
+        }
+
+        .afspraak-input label {
+            display: block;
+            font-size: 0.8rem;
+            color: #666;
+            margin-bottom: 6px;
+            font-weight: 500;
+        }
+
+        .afspraak-input textarea {
+            width: 100%;
+            min-height: 60px;
+            padding: 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 0.85rem;
+            color: #333;
+            resize: vertical;
+        }
+
+        .afspraak-meta {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .afspraak-meta input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid #e5e5e5;
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+
         .role-toggle {
             display: flex;
             gap: 10px;
@@ -449,7 +625,7 @@
         <header>
             <h1>Feedback Diagnose</h1>
             <p class="subtitle">Reflectie-instrument voor feedback-trainingen — observeer het patroon in 6 dimensies</p>
-            <p class="version-info">Versie 2.0 • Groepspatroon + individuele reflectie</p>
+            <p class="version-info">Versie 3.3 • 5 interventietypes: Rol · Werkafspraak · Relationele afspraak · Project · Volgende actie</p>
         </header>
 
         <div class="role-toggle">
@@ -465,13 +641,17 @@
 
         <div class="main-content">
             <div class="sliders-panel" id="slidersPanel">
+                <div class="phase-label what">1 · What?</div>
+                <div class="phase-question">Wat zagen jullie gebeuren? Beweeg de sliders naar wat het meest voorkwam.</div>
                 <!-- Sliders worden dynamisch gegenereerd -->
             </div>
 
             <div class="pattern-panel">
-                <h2>Huidig Patroon</h2>
-                <div class="pattern-visual" id="patternVisual"></div>
+                <div class="phase-label sowhat">2 · So What?</div>
+                <div class="phase-question">Welk patroon vormt zich? Wat valt op?</div>
 
+                <h2 style="margin-top: 5px;">Huidig Patroon</h2>
+                <div class="pattern-visual" id="patternVisual"></div>
                 <div class="pattern-summary" id="patternSummary"></div>
 
                 <div class="attention-section hidden" id="attentionSection">
@@ -480,9 +660,96 @@
                 </div>
 
                 <div class="target-pattern hidden" id="targetPattern">
-                    <h3>→ Ontwikkeling naar</h3>
+                    <h3 style="margin-top: 20px;">→ Ontwikkeling naar</h3>
                     <div class="pattern-visual" id="targetPatternVisual"></div>
                     <div class="pattern-summary" id="targetPatternSummary"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nowwhat-panel">
+            <div class="phase-label nowwhat">3 · Now What?</div>
+            <div class="phase-question">Welk type interventie past bij wat jullie zien?</div>
+
+            <div class="afspraak-intro">
+                Vijf soorten interventies. <strong>Systeem</strong> (Rol, Werkafspraak, Relationele afspraak) verandert de structuur. <strong>Actie</strong> (Project, Volgende actie) zet iets concreet in beweging. Vaak heb je er meerdere nodig.
+            </div>
+
+            <div id="afspraakContent">
+                <div class="afspraak-block active" data-type="rol">
+                    <h4>Rol</h4>
+                    <div class="afspraak-lijn">Werkgebied — wat moet gedaan worden, door wie</div>
+                    <p>Een nieuwe of aangepaste rol. Een rol is een werkgebied met eigen verantwoordelijkheden.</p>
+                    <div class="afspraak-voorbeelden">
+                        <strong>Voorbeeld 1:</strong> <em>"Niemand bewaakt of klantafspraken nagekomen worden — we maken de rol 'Klantbewaker' aan."</em><br>
+                        <strong>Voorbeeld 2:</strong> <em>"De rol Product Owner heeft te veel — we splitsen hem in Product Owner en Tech Lead."</em>
+                    </div>
+                    <div class="afspraak-bron">
+                        Bron: <a href="https://www.holacracy.org/r/holacracy-glossary/" target="_blank">Holacracy Glossary — Role</a>
+                    </div>
+                </div>
+
+                <div class="afspraak-block active" data-type="werkafspraak">
+                    <h4>Werkafspraak</h4>
+                    <div class="afspraak-lijn">Voorwaarde of proces — tussen rollen, niet mensen</div>
+                    <p>Een regel die verleent of beperkt hoe rollen samenwerken rond een werkgebied (domein). Het gaat over het werk, niet over gedrag.</p>
+                    <div class="afspraak-voorbeelden">
+                        <strong>Voorbeeld 1:</strong> <em>"Voordat Sales een korting groter dan 10% toezegt, heeft Sales goedkeuring nodig van de rol Pricing."</em><br>
+                        <strong>Voorbeeld 2:</strong> <em>"Elke technische keuze die de database raakt, wordt eerst getoetst door de rol Architect."</em>
+                    </div>
+                    <div class="afspraak-bron">
+                        Bron: <a href="https://www.holacracy.org/blog/holacracy-basics-understanding-policies/" target="_blank">Holacracy Basics — Understanding Policies</a>
+                    </div>
+                </div>
+
+                <div class="afspraak-block active" data-type="relationeel">
+                    <h4>Relationele afspraak</h4>
+                    <div class="afspraak-lijn">Gedrag — tussen mensen, niet rollen</div>
+                    <p>Een afspraak over hoe mensen zich naar elkaar gedragen. Je vraagt een bepaald soort gedrag.</p>
+                    <div class="afspraak-voorbeelden">
+                        <strong>Voorbeeld 1:</strong> <em>"Als we iets storend vinden, spreken we elkaar binnen 24 uur aan — niet langer laten liggen."</em><br>
+                        <strong>Voorbeeld 2:</strong> <em>"Bij feedback volgen we de GEBAK-volgorde: gedrag → effect → behoefte → ander → koers."</em>
+                    </div>
+                    <div class="afspraak-bron">
+                        Bron: <a href="https://www.holacracy.org/blog/understanding-relational-agreements/" target="_blank">Holacracy — Understanding Relational Agreements</a>
+                    </div>
+                </div>
+
+                <div class="afspraak-divider">↓ Actie-interventies (GTD)</div>
+
+                <div class="afspraak-block active" data-type="project">
+                    <h4>Project</h4>
+                    <div class="afspraak-lijn">Resultaat dat meer dan één stap vraagt</div>
+                    <p>Een gewenst resultaat waar je je aan committeert, dat meer dan één actiestap vergt en binnen een kwartaal afgerond kan zijn.</p>
+                    <div class="afspraak-voorbeelden">
+                        <strong>Voorbeeld 1:</strong> <em>"We willen de feedback-cultuur verankeren — we starten het project 'Feedback-ritme Q2' met een vervolgtraining, coach-intervisies en een evaluatie."</em><br>
+                        <strong>Voorbeeld 2:</strong> <em>"We willen onze retro's laten werken — project 'Retro-ontwerp' om format, frequentie en eigenaar uit te werken."</em>
+                    </div>
+                    <div class="afspraak-bron">
+                        Bron: <a href="https://gettingthingsdone.com/what-is-gtd/" target="_blank">Getting Things Done — What is GTD?</a>
+                    </div>
+                </div>
+
+                <div class="afspraak-block active" data-type="next-action">
+                    <h4>Volgende actie</h4>
+                    <div class="afspraak-lijn">De concrete eerstvolgende handeling</div>
+                    <p>De heel concrete fysieke, zichtbare eerstvolgende stap — direct uitvoerbaar, niet abstract. Iets dat je in één keer kunt doen.</p>
+                    <div class="afspraak-voorbeelden">
+                        <strong>Voorbeeld 1:</strong> <em>"Anne mailt woensdag Ricardo om een afspraak te maken over de kortingsgrens."</em><br>
+                        <strong>Voorbeeld 2:</strong> <em>"Marco schrijft vrijdag een 1-pager over de nieuwe rol Klantbewaker en deelt 'm in #algemeen."</em>
+                    </div>
+                    <div class="afspraak-bron">
+                        Bron: <a href="https://gettingthingsdone.com/what-is-gtd/" target="_blank">Getting Things Done — What is GTD?</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="afspraak-input">
+                <label for="afspraakText">Onze afspraak:</label>
+                <textarea id="afspraakText" placeholder="Wat gaan we concreet anders doen?"></textarea>
+                <div class="afspraak-meta">
+                    <input type="text" id="afspraakWie" placeholder="Wie?">
+                    <input type="text" id="afspraakWanneer" placeholder="Wanneer?">
                 </div>
             </div>
         </div>
@@ -1592,7 +1859,10 @@ document.getElementById('sessionDate').valueAsDate = new Date();
 // Dynamisch sliders genereren
 function generateSliders() {
     const panel = document.getElementById('slidersPanel');
-    let html = '';
+    let html = `
+        <div class="phase-label what">1 · What?</div>
+        <div class="phase-question">Beweeg de sliders naar wat je herkend hebt.</div>
+    `;
 
     // Render from line 6 (top) to line 1 (bottom) to match hexagram order
     for (let i = 6; i >= 1; i--) {
@@ -1817,16 +2087,34 @@ function updateDialogue() {
         if (val < 20 || val > 80) {
             const sv = spanningsvelden[i + 1];
             const poleName = val < 20 ? sv.leftLabel : sv.rightLabel;
-            questions.push(`Bij <strong>${sv.naam}</strong> zie je veel ${poleName}-energie. Wat is het effect daarvan?`);
+            questions.push(`Bij <strong>${sv.naam}</strong> zie je veel ${poleName}-energie. Wat was het effect daarvan tijdens de training?`);
         }
     });
 
-    if (questions.length === 0) {
-        questions.push('De dynamiek tussen de polen lijkt in balans. Waar voelt het team de meeste spanning?');
+    // Context-bepaling op basis van rol
+    let contextZin, actieZin;
+    if (currentRole === 'groep') {
+        if (questions.length === 0) {
+            questions.push('De dynamiek tussen de polen lijkt in balans. Waar voelde de groep de meeste spanning?');
+        }
+        contextZin = 'Wat valt op in dit groepspatroon tijdens de feedback-training?';
+        actieZin = 'Welke interventie zou het patroon verder helpen — een rol, werkafspraak, relationele afspraak, project of volgende actie?';
+    } else if (currentRole === 'gever') {
+        if (questions.length === 0) {
+            questions.push('Je eigen patroon als gever lijkt in balans. Waar voelde jij zelf de meeste spanning tijdens het geven van feedback?');
+        }
+        contextZin = 'Wat valt op in jouw eigen patroon als feedback-gever?';
+        actieZin = 'Welke kleine verschuiving zou jou helpen om de volgende keer steviger feedback te geven?';
+    } else {
+        if (questions.length === 0) {
+            questions.push('Je eigen patroon als ontvanger lijkt in balans. Waar voelde jij de meeste spanning tijdens het ontvangen?');
+        }
+        contextZin = 'Wat valt op in jouw eigen patroon als feedback-ontvanger?';
+        actieZin = 'Welke kleine verschuiving zou jou helpen om de volgende keer opener te ontvangen?';
     }
 
-    questions.push('Wat valt op in dit beeld van jullie werkoverleg?');
-    questions.push('Wat zou één kleine verschuiving kunnen zijn voor de volgende keer?');
+    questions.push(contextZin);
+    questions.push(actieZin);
 
     document.getElementById('dialogueQuestions').innerHTML =
         questions.map(q => `<p class="dialogue-question">${q}</p>`).join('');
