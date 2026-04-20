@@ -148,11 +148,20 @@
             justify-content: space-between;
             font-size: 0.8rem;
             color: #666;
-            margin-bottom: 12px;
+            margin-bottom: 4px;
         }
 
         .pole-left { color: #059669; font-weight: 500; }
         .pole-right { color: #d97706; font-weight: 500; }
+
+        .slider-meaning {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #999;
+            font-style: italic;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+        }
 
         .slider-track {
             position: relative;
@@ -439,13 +448,14 @@
     <div class="container">
         <header>
             <h1>Feedback Diagnose</h1>
-            <p class="subtitle">Systemische analyse van spanningsvelden in feedback-gesprekken</p>
-            <p class="version-info">Versie 1.0 • GEBAK × Dynamic Steering Model</p>
+            <p class="subtitle">Reflectie-instrument voor feedback-trainingen — observeer het patroon in 6 dimensies</p>
+            <p class="version-info">Versie 2.0 • Groepspatroon + individuele reflectie</p>
         </header>
 
         <div class="role-toggle">
-            <button class="role-btn active" data-role="gever" onclick="setRole('gever')">🗣️ Ik geef feedback</button>
-            <button class="role-btn" data-role="ontvanger" onclick="setRole('ontvanger')">👂 Ik ontvang feedback</button>
+            <button class="role-btn active" data-role="groep" onclick="setRole('groep')">👥 Groepspatroon</button>
+            <button class="role-btn" data-role="gever" onclick="setRole('gever')">🗣️ Mijn patroon als gever</button>
+            <button class="role-btn" data-role="ontvanger" onclick="setRole('ontvanger')">👂 Mijn patroon als ontvanger</button>
         </div>
 
         <div class="meta-inputs">
@@ -488,7 +498,8 @@
 // FEEDBACK GEVER spanningsvelden — gebaseerd op 6 DSM-lijnen
 const spanningsveldenGever = {
     1: {
-        naam: "1. Grond — Vertrouwen ↔ Zekerheid",
+        naam: "Vertrouwen ↔ Zekerheid",
+        betekenis: "Structuur",
         leftLabel: "Vertrouwen",
         rightLabel: "Zekerheid",
         teveelLeft: {
@@ -525,7 +536,8 @@ const spanningsveldenGever = {
         }
     },
     2: {
-        naam: "2. Ritme — Zorgvuldigheid ↔ Tempo",
+        naam: "Zorgvuldigheid ↔ Tempo",
+        betekenis: "Ritme",
         leftLabel: "Zorgvuldigheid",
         rightLabel: "Tempo",
         teveelLeft: {
@@ -562,7 +574,8 @@ const spanningsveldenGever = {
         }
     },
     3: {
-        naam: "3. Sprong — Intern ↔ Extern",
+        naam: "Intern ↔ Extern",
+        betekenis: "Koppeling",
         leftLabel: "Intern",
         rightLabel: "Extern",
         teveelLeft: {
@@ -599,7 +612,8 @@ const spanningsveldenGever = {
         }
     },
     4: {
-        naam: "4. Adem — Informeel ↔ Formeel",
+        naam: "Informeel ↔ Formeel",
+        betekenis: "Relatie en samenwerking",
         leftLabel: "Informeel",
         rightLabel: "Formeel",
         teveelLeft: {
@@ -636,7 +650,8 @@ const spanningsveldenGever = {
         }
     },
     5: {
-        naam: "5. Richting — Afstemming ↔ Eigenaarschap",
+        naam: "Afstemming ↔ Eigenaarschap",
+        betekenis: "Leiderschap",
         leftLabel: "Afstemming",
         rightLabel: "Eigenaarschap",
         teveelLeft: {
@@ -673,7 +688,8 @@ const spanningsveldenGever = {
         }
     },
     6: {
-        naam: "6. Stilte — Reflectie ↔ Actie",
+        naam: "Reflectie ↔ Actie",
+        betekenis: "Meta-bewustzijn",
         leftLabel: "Reflectie",
         rightLabel: "Actie",
         teveelLeft: {
@@ -714,7 +730,8 @@ const spanningsveldenGever = {
 // FEEDBACK ONTVANGER spanningsvelden — gebaseerd op 6 DSM-lijnen
 const spanningsveldenOntvanger = {
     1: {
-        naam: "1. Grond — Vertrouwen ↔ Zekerheid",
+        naam: "Vertrouwen ↔ Zekerheid",
+        betekenis: "Structuur",
         leftLabel: "Vertrouwen",
         rightLabel: "Zekerheid",
         teveelLeft: {
@@ -751,7 +768,8 @@ const spanningsveldenOntvanger = {
         }
     },
     2: {
-        naam: "2. Ritme — Zorgvuldigheid ↔ Tempo",
+        naam: "Zorgvuldigheid ↔ Tempo",
+        betekenis: "Ritme",
         leftLabel: "Zorgvuldigheid",
         rightLabel: "Tempo",
         teveelLeft: {
@@ -788,7 +806,8 @@ const spanningsveldenOntvanger = {
         }
     },
     3: {
-        naam: "3. Sprong — Intern ↔ Extern",
+        naam: "Intern ↔ Extern",
+        betekenis: "Koppeling",
         leftLabel: "Intern",
         rightLabel: "Extern",
         teveelLeft: {
@@ -825,7 +844,8 @@ const spanningsveldenOntvanger = {
         }
     },
     4: {
-        naam: "4. Adem — Informeel ↔ Formeel",
+        naam: "Informeel ↔ Formeel",
+        betekenis: "Relatie en samenwerking",
         leftLabel: "Informeel",
         rightLabel: "Formeel",
         teveelLeft: {
@@ -862,7 +882,8 @@ const spanningsveldenOntvanger = {
         }
     },
     5: {
-        naam: "5. Richting — Afstemming ↔ Eigenaarschap",
+        naam: "Afstemming ↔ Eigenaarschap",
+        betekenis: "Leiderschap",
         leftLabel: "Afstemming",
         rightLabel: "Eigenaarschap",
         teveelLeft: {
@@ -899,7 +920,8 @@ const spanningsveldenOntvanger = {
         }
     },
     6: {
-        naam: "6. Stilte — Reflectie ↔ Actie",
+        naam: "Reflectie ↔ Actie",
+        betekenis: "Meta-bewustzijn",
         leftLabel: "Reflectie",
         rightLabel: "Actie",
         teveelLeft: {
@@ -937,9 +959,241 @@ const spanningsveldenOntvanger = {
     }
 };
 
+// GROEPSPATROON — observatie van groepsdynamiek tijdens feedback-training
+const spanningsveldenGroep = {
+    1: {
+        naam: "Vertrouwen ↔ Zekerheid",
+        betekenis: "Structuur",
+        leftLabel: "Vertrouwen",
+        rightLabel: "Zekerheid",
+        teveelLeft: {
+            label: "Teveel Vertrouwen",
+            statements: [
+                "\"We zien wel waar het schip strandt\"",
+                "Vage kaders, onduidelijke rollen, groep dreef rond"
+            ],
+            schaduw: "Ongegrondheid"
+        },
+        left: {
+            statements: [
+                "Er was ruimte om te laten gebeuren",
+                "Mensen lieten zich raken door wat er kwam",
+                "De groep kon ontvankelijk blijven",
+                "Niet alles hoefde vooraf te kloppen"
+            ]
+        },
+        right: {
+            statements: [
+                "De kaders waren helder — rollen, tijd, doel",
+                "Iedereen wist wat er gevraagd werd",
+                "Structuur was merkbaar en dragend",
+                "Er was grip op de oefeningen"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Zekerheid",
+            statements: [
+                "\"Zo staat het in de instructie\"",
+                "Alles volgens de letter, geen ruimte voor spontaniteit"
+            ],
+            schaduw: "Rigiditeit"
+        }
+    },
+    2: {
+        naam: "Zorgvuldigheid ↔ Tempo",
+        betekenis: "Ritme",
+        leftLabel: "Zorgvuldigheid",
+        rightLabel: "Tempo",
+        teveelLeft: {
+            label: "Teveel Zorgvuldigheid",
+            statements: [
+                "\"Zullen we hier nog even bij stilstaan?\"",
+                "Groep bleef hangen, kwam niet door het programma"
+            ],
+                schaduw: "Stagnatie"
+        },
+        left: {
+            statements: [
+                "Er werd doorgevraagd, tijd genomen per persoon",
+                "Oefeningen kregen ruimte om te landen",
+                "Belangrijke momenten werden niet overgeslagen",
+                "Iedereen kwam aan bod"
+            ]
+        },
+        right: {
+            statements: [
+                "De groep hield tempo, we kwamen door het programma",
+                "Oefeningen werden vlot uitgevoerd",
+                "Tijdsdruk werd gevoeld en gerespecteerd",
+                "Pauzes werden benut"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Tempo",
+            statements: [
+                "\"Volgende oefening, we moeten door\"",
+                "Doorjakkeren, geen tijd voor verwerking"
+            ],
+            schaduw: "Oppervlakkigheid"
+        }
+    },
+    3: {
+        naam: "Intern ↔ Extern",
+        betekenis: "Koppeling",
+        leftLabel: "Intern",
+        rightLabel: "Extern",
+        teveelLeft: {
+            label: "Teveel Intern",
+            statements: [
+                "\"Wat doet dit met ons als groep?\"",
+                "Alleen wij-gevoel, geen realiteitscheck"
+            ],
+            schaduw: "Navelstaren"
+        },
+        left: {
+            statements: [
+                "Focus op de interne groepsbeleving",
+                "Aandacht voor hoe het met elkaar ging",
+                "Emoties en gevoelens kregen ruimte",
+                "Wij-als-team kwam in beeld"
+            ]
+        },
+        right: {
+            statements: [
+                "Koppeling gemaakt naar het echte werk",
+                "Voorbeelden uit klant- of werkcontext",
+                "Wat betekent dit voor maandag?",
+                "Praktische toepassing werd benoemd"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Extern",
+            statements: [
+                "\"Ja maar in de praktijk werkt dat niet\"",
+                "Alleen over buitenwereld, niet over hier-en-nu"
+            ],
+            schaduw: "Vluchten"
+        }
+    },
+    4: {
+        naam: "Informeel ↔ Formeel",
+        betekenis: "Relatie en samenwerking",
+        leftLabel: "Informeel",
+        rightLabel: "Formeel",
+        teveelLeft: {
+            label: "Teveel Informeel",
+            statements: [
+                "\"O dat doet me denken aan...\"",
+                "Veel zijsporen, persoonlijke verhalen, draad kwijt"
+            ],
+            schaduw: "Chaos"
+        },
+        left: {
+            statements: [
+                "Ruimte voor humor en menselijkheid",
+                "Mensen deelden persoonlijke ervaring",
+                "Het voelde warm, niet klinisch",
+                "Spontaniteit werd toegelaten"
+            ]
+        },
+        right: {
+            statements: [
+                "Werkvormen werden consequent gevolgd",
+                "GEBAK-structuur bleef zichtbaar",
+                "Rolkaarten werden gebruikt",
+                "Het bleef bij de opdracht"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Formeel",
+            statements: [
+                "\"We zitten nu bij stap 3 van GEBAK\"",
+                "Strak protocol, geen ademruimte"
+            ],
+            schaduw: "Rigiditeit"
+        }
+    },
+    5: {
+        naam: "Afstemming ↔ Eigenaarschap",
+        betekenis: "Leiderschap",
+        leftLabel: "Afstemming",
+        rightLabel: "Eigenaarschap",
+        teveelLeft: {
+            label: "Teveel Afstemming",
+            statements: [
+                "\"Iedereen was het met elkaar eens\"",
+                "Geen eigen stem, alles werd geharmoniseerd"
+            ],
+            schaduw: "Consensus-waas"
+        },
+        left: {
+            statements: [
+                "Perspectieven werden uitgewisseld",
+                "Er werd gevraagd: wat vinden anderen?",
+                "De groep zocht gezamenlijkheid",
+                "Input kreeg ruimte vóór besluiten"
+            ]
+        },
+        right: {
+            statements: [
+                "Mensen stonden voor hun eigen observatie",
+                "\"Dit zie ik, dit vind ik\" werd uitgesproken",
+                "Anderen maakten verschil zichtbaar",
+                "Eigen standpunten werden benoemd"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Eigenaarschap",
+            statements: [
+                "\"Ik vind dit, punt\"",
+                "Iedereen deed z'n eigen ding, geen collectief"
+            ],
+            schaduw: "Versplintering"
+        }
+    },
+    6: {
+        naam: "Reflectie ↔ Actie",
+        betekenis: "Meta-bewustzijn",
+        leftLabel: "Reflectie",
+        rightLabel: "Actie",
+        teveelLeft: {
+            label: "Teveel Reflectie",
+            statements: [
+                "\"Laten we dit nog even duiden\"",
+                "Analyse bleef maar doorgaan, kwam niet tot handelen"
+            ],
+            schaduw: "Stilstand"
+        },
+        left: {
+            statements: [
+                "Er werd stilgestaan bij wat opviel",
+                "Patronen werden benoemd, niet alleen incidenten",
+                "\"Wat gebeurt hier eigenlijk?\"",
+                "Ruimte voor meta-perspectief"
+            ]
+        },
+        right: {
+            statements: [
+                "Groep ging gericht aan de slag",
+                "Oefeningen werden gedaan, niet besproken",
+                "\"Laten we proberen\" boven \"laten we bedenken\"",
+                "Direct doen, observeren, leren"
+            ]
+        },
+        teveelRight: {
+            label: "Teveel Actie",
+            statements: [
+                "\"Doen, doen, doen!\"",
+                "Geen moment van stilstand, tempo was baas"
+            ],
+            schaduw: "Blinde actie"
+        }
+    }
+};
+
 // Actieve rol — wordt gewisseld via setRole()
-let currentRole = 'gever';
-let spanningsvelden = spanningsveldenGever;
+let currentRole = 'groep';
+let spanningsvelden = spanningsveldenGroep;
 
 // Patroon interpretaties met hexagram nummers (King Wen volgorde)
 // Business-georiënteerde titels geïnspireerd op Cheng Yi's "The Tao of Organization"
@@ -1352,6 +1606,7 @@ function generateSliders() {
                 <span class="pole-left">← ${sv.leftLabel}</span>
                 <span class="pole-right">${sv.rightLabel} →</span>
             </div>
+            <div class="slider-meaning">${sv.betekenis || ''}</div>
             <div class="slider-track">
                 <input type="range" min="0" max="100" value="50" data-line="${i}">
             </div>
@@ -1593,7 +1848,13 @@ function resetAll() {
 
 function setRole(role) {
     currentRole = role;
-    spanningsvelden = (role === 'gever') ? spanningsveldenGever : spanningsveldenOntvanger;
+    if (role === 'groep') {
+        spanningsvelden = spanningsveldenGroep;
+    } else if (role === 'gever') {
+        spanningsvelden = spanningsveldenGever;
+    } else {
+        spanningsvelden = spanningsveldenOntvanger;
+    }
 
     // Update toggle UI
     document.querySelectorAll('.role-btn').forEach(btn => {
