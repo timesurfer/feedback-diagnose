@@ -609,13 +609,42 @@
         .hidden { display: none !important; }
 
         @media print {
+            @page {
+                size: A4;
+                margin: 15mm;
+            }
             body {
                 background: white;
                 color: black;
+                padding: 0;
             }
-            .actions { display: none; }
-            .sliders-panel, .pattern-panel {
-                background: #f5f5f5;
+            .actions,
+            .role-toggle,
+            .meta-inputs,
+            .dialogue-section { display: none !important; }
+            .main-content {
+                display: block !important;
+            }
+            .sliders-panel,
+            .pattern-panel,
+            .nowwhat-panel {
+                background: white !important;
+                border: 1px solid #ddd !important;
+                page-break-inside: avoid;
+                margin-bottom: 10px;
+                padding: 15px !important;
+            }
+            .slider-group {
+                page-break-inside: avoid;
+            }
+            h1 { font-size: 18pt; }
+            h2, h3 { font-size: 14pt; }
+            .phase-label { font-size: 10pt !important; }
+            .slider-title { font-size: 11pt; }
+            .afspraak-block { page-break-inside: avoid; }
+            input[type="range"] {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
             }
         }
     </style>
@@ -625,7 +654,7 @@
         <header>
             <h1>Feedback Diagnose</h1>
             <p class="subtitle">Reflectie-instrument voor feedback-trainingen — observeer het patroon in 6 dimensies</p>
-            <p class="version-info">Versie 3.3 • 5 interventietypes: Rol · Werkafspraak · Relationele afspraak · Project · Volgende actie</p>
+            <p class="version-info">Versie 3.4 • Hexagram-duidingen passen zich aan per rol</p>
         </header>
 
         <div class="role-toggle">
@@ -1971,6 +2000,59 @@ function isAttentionLine(value) {
     return value < 20 || value > 80;
 }
 
+// Adapt team-oriented text to role-specific language (individual modes)
+function adaptTextForRole(text) {
+    if (currentRole === 'groep' || !text) return text;
+
+    const role = currentRole === 'gever' ? 'feedback-gever' : 'feedback-ontvanger';
+    const roleCap = role.charAt(0).toUpperCase() + role.slice(1);
+
+    return text
+        // "Het team is/heeft/kan" → "Als X ben/heb/kun je"
+        .replace(/Het team is\b/g, `Als ${roleCap} ben je`)
+        .replace(/het team is\b/g, `als ${role} ben je`)
+        .replace(/Het team heeft\b/g, `Als ${roleCap} heb je`)
+        .replace(/het team heeft\b/g, `als ${role} heb je`)
+        .replace(/Het team kan\b/g, `Als ${roleCap} kun je`)
+        .replace(/het team kan\b/g, `als ${role} kun je`)
+        .replace(/Het team gaat\b/g, `Als ${roleCap} ga je`)
+        .replace(/het team gaat\b/g, `als ${role} ga je`)
+        .replace(/Het team wil\b/g, `Als ${roleCap} wil je`)
+        .replace(/het team wil\b/g, `als ${role} wil je`)
+        .replace(/Het team moet\b/g, `Als ${roleCap} moet je`)
+        .replace(/het team moet\b/g, `als ${role} moet je`)
+        .replace(/Het team doet\b/g, `Als ${roleCap} doe je`)
+        .replace(/het team doet\b/g, `als ${role} doe je`)
+        .replace(/Het team durft\b/g, `Als ${roleCap} durf je`)
+        .replace(/het team durft\b/g, `als ${role} durf je`)
+        .replace(/Het team vraagt\b/g, `Als ${roleCap} vraag je`)
+        .replace(/het team vraagt\b/g, `als ${role} vraag je`)
+        .replace(/Het team luistert\b/g, `Als ${roleCap} luister je`)
+        .replace(/het team luistert\b/g, `als ${role} luister je`)
+        .replace(/Het team werkt\b/g, `Als ${roleCap} werk je`)
+        .replace(/het team werkt\b/g, `als ${role} werk je`)
+        .replace(/Het team zit\b/g, `Als ${roleCap} zit je`)
+        .replace(/het team zit\b/g, `als ${role} zit je`)
+        // Generic fallback: "Het team" → "Jij (als X)"
+        .replace(/Het team\b/g, `Jij (als ${role})`)
+        .replace(/het team\b/g, `jij (als ${role})`)
+        // "De groep" with similar patterns
+        .replace(/De groep is\b/g, `Als ${roleCap} ben je`)
+        .replace(/de groep is\b/g, `als ${role} ben je`)
+        .replace(/De groep heeft\b/g, `Als ${roleCap} heb je`)
+        .replace(/de groep heeft\b/g, `als ${role} heb je`)
+        .replace(/De groep\b/g, `Jij (als ${role})`)
+        .replace(/de groep\b/g, `jij (als ${role})`)
+        // Plural "teams/groepen" → "mensen"
+        .replace(/Teamleden\b/g, 'Jij')
+        .replace(/teamleden\b/g, 'jij')
+        // Werkoverleg → feedback-gesprek
+        .replace(/werkoverleg/gi, 'feedback-gesprek')
+        // "in het team" → "in jezelf"
+        .replace(/in het team\b/g, 'in jezelf')
+        .replace(/binnen het team\b/g, 'in jezelf');
+}
+
 function updatePattern() {
     const visualEl = document.getElementById('patternVisual');
     const attentionSection = document.getElementById('attentionSection');
@@ -2020,11 +2102,11 @@ function updatePattern() {
         let summaryHtml = `
             <h3><span class="pattern-number">${patroon.nummer}.</span> ${patroon.naam}</h3>
             <p><strong>${patroon.beschrijving}</strong></p>
-            <p>${patroon.teamduiding}</p>
+            <p>${adaptTextForRole(patroon.teamduiding)}</p>
             <h3>Reflectievraag</h3>
-            <p>${patroon.advies}</p>
+            <p>${adaptTextForRole(patroon.advies)}</p>
             <h3>Schaduw</h3>
-            <p>${patroon.schaduw}</p>
+            <p>${adaptTextForRole(patroon.schaduw)}</p>
         `;
         summaryEl.innerHTML = summaryHtml;
     } else {
@@ -2067,7 +2149,7 @@ function updatePattern() {
                 targetSummaryEl.innerHTML = `
                     <h4><span class="pattern-number">${targetPatroon.nummer}.</span> ${targetPatroon.naam}</h4>
                     <p>${targetPatroon.beschrijving}</p>
-                    <p><em>${targetPatroon.teamduiding}</em></p>
+                    <p><em>${adaptTextForRole(targetPatroon.teamduiding)}</em></p>
                 `;
             } else {
                 const targetLeftCount = targetBinary.split('').filter(b => b === '0').length;
